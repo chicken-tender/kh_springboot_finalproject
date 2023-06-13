@@ -21,10 +21,10 @@ class ItemRepositoryTest {
     @Test
     @DisplayName("상품 저장 테스트")
     public void createItemTest() {
-        for(int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             Item item = new Item();
             item.setItemName("테스트 상품" + i);
-            item.setPrice(10000 + i*1000);
+            item.setPrice(10000 + i * 1000);
             item.setItemDetail("테스트 상품의 상세 설명" + i);
             item.setItemSellStatus(ItemSellStatus.SELL);
             item.setStockNum(100);
@@ -33,13 +33,12 @@ class ItemRepositoryTest {
             itemRepository.save(item); // INSERT 테스트
         }
     }
-
     @Test
     @DisplayName("상품명 조회 테스트")
     public void findByItemNameTest() {
         this.createItemTest();
         List<Item> itemList = itemRepository.findByItemName("테스트 상품5");
-        for(Item e : itemList) {
+        for (Item e : itemList) {
             System.out.println("✴️ " + e.toString());
         }
     }
@@ -48,28 +47,49 @@ class ItemRepositoryTest {
     public void findByItemNameOrItemDetailTest() {
         this.createItemTest();
         List<Item> itemList = itemRepository.findByItemNameOrItemDetail("테스트 상품5", "테스트 상품의 상세 설명7");
-        for(Item e : itemList) {
+        for (Item e : itemList) {
             System.out.println("결과 :️ " + e.toString());
         }
     }
-
     @Test
     @DisplayName("입력 받은 가격보다 작은 상품 조회 테스트")
     public void findByPriceLessThanTest() {
         this.createItemTest();
         List<Item> itemList = itemRepository.findByPriceLessThan(15000);
-        for(Item e : itemList) {
+        for (Item e : itemList) {
             System.out.println("✴️ :️ " + e.toString());
         }
     }
-
     @Test
     @DisplayName("가격 내림차순 조회 테스트")
     public void findByPriceLessThanOrderByPriceDescTest() {
-        createItemTest();
+        this.createItemTest();
         List<Item> itemList = itemRepository.findByPriceLessThanOrderByPriceDesc(15000);
-        for(Item e : itemList) {
+        for (Item e : itemList) {
             System.out.println("✴️ :️ " + e.toString());
         }
+    }
+    @Test
+    @DisplayName("가격 범위로 상품 조회")
+    public void findByPriceBetweenTest() {
+        this.createItemTest();
+        List<Item> itemList = itemRepository.findByPriceBetween(12000, 15000);
+        for (Item e : itemList) {
+            System.out.println("✴️ :️ " + e.toString());
+        }
+    }
+    @Test
+    @DisplayName("상품 이름 문자열 검색")
+    public void findByItemNameContainingTest() {
+        this.createItemTest();
+        List<Item> itemList = itemRepository.findByItemNameContaining("테스트");
+        for (Item e : itemList) System.out.println("✴️ : " + e.toString());
+    }
+    @Test
+    @DisplayName("@Query를 이용한 상품 조회 테스트")
+    public void findByItemDetailTest() {
+        this.createItemTest();
+        List<Item> itemList = itemRepository.findByItemDetail("테스트 상품의");
+        for (Item e : itemList) System.out.println("✴️ : " + e.toString());
     }
 }
