@@ -1,8 +1,9 @@
 package com.kh.finalPrjAm.entity;
+import com.kh.finalPrjAm.constant.Authority;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,20 @@ public class Member {
     private String password;
     @Column(unique = true)
     private String email;
-    private LocalDateTime joinTime; // join_time으로 변환됨
 
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
+    @Builder
+    public Member(String user, String email, String password, String name, Authority authority) {
+        this.userId = user;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.authority = authority;
+    }
+
+    public Member() {
+
+    }
 }

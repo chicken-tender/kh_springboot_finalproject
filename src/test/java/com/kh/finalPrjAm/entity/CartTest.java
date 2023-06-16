@@ -34,7 +34,6 @@ class CartTest {
         member.setPassword("password1234");
         member.setName("홍길동");
         member.setEmail("test2024@naver.com");
-        member.setJoinTime(LocalDateTime.now());
         return member;
     }
     @Test
